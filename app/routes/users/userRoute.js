@@ -1,4 +1,6 @@
-let routeConfig = require('../../config/config');
+let routeConfig = require('../../config/config').route;
+let dbConfig = require('../../config/config').db;
+const auth = require('../../middleware/auth');
 
 // crud operation for users happens here
 
@@ -7,8 +9,8 @@ let routeConfig = require('../../config/config');
 // third endpoint {updates}
 // fouth endpoint {deletes} 
 
-routeConfig.app.post('/user/create', async (req, res) => {
-    let createUser = routeConfig.db.collection('users')
+routeConfig.post('/user/create', async (req, res) => {
+    let createUser = dbConfig.collection('users')
     await createUser.add({
         email: req.body.email,
         username: req.body.username,
@@ -17,9 +19,9 @@ routeConfig.app.post('/user/create', async (req, res) => {
      res.json({message:'done'});
 });
 
-routeConfig.app.get('/user/read', async (req, res) => {
+routeConfig.get('/user/read', auth, async (req, res) => {
     let getUsers = []
-    const users = await routeConfig.db.collection('users').get()
+    const users = await dbConfig.collection('users').get()
     if (users.docs.length > 0) {
       for (const user of users.docs) {
        getUsers.push(user.data())
@@ -27,8 +29,8 @@ routeConfig.app.get('/user/read', async (req, res) => {
     res.json(getUsers);
   });
 
-  routeConfig.app.post('/user/update', async (req, res) => {
-    let updateUser = routeConfig.db.collection('users').doc(req.body.uID)
+  routeConfig.post('/user/update', async (req, res) => {
+    let updateUser = dbConfig.collection('users').doc(req.body.uID)
     await updateUser.update({
       email: req.body.email,
       username: req.body.username
@@ -36,7 +38,9 @@ routeConfig.app.get('/user/read', async (req, res) => {
     res.json({message:'done'});
   });
 
-  routeConfig.app.post('/user/delete', async (req, res) => {
-    await routeConfig.db.collection('users').doc(req.body.uID).delete()
+  routeConfig.post('/user/delete', async (req, res) => {
+    await dbConfig.collection('users').doc(req.body.uID).delete()
     res.json({message:'done'});
   });
+
+module.exports = routeConfig;

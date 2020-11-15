@@ -1,4 +1,6 @@
-let routeConfig = require('../../config/config');
+let routeConfig = require('../../config/config').route;
+let dbConfig = require('../../config/config').db;
+const auth = require('../../middleware/auth');
 
 // crud operation for collections happens here
 
@@ -7,8 +9,8 @@ let routeConfig = require('../../config/config');
 // third endpoint {updates}
 // fouth endpoint {deletes} 
 
-routeConfig.app.post('/collection/create', async (req, res) => {
-    let createCollection = routeConfig.db.collection('collections')
+routeConfig.post('/collection/create', async (req, res) => {
+    let createCollection = dbConfig.collection('collections')
     await createCollection.add({
         email: req.body.email,
         username: req.body.username,
@@ -17,9 +19,9 @@ routeConfig.app.post('/collection/create', async (req, res) => {
      res.json({message:'done'});
 });
 
-routeConfig.app.get('/collection/read', async (req, res) => {
+routeConfig.get('/collection/read', auth, async (req, res) => {
     let getCollections = []
-    const collections = await routeConfig.db.collection('collections').get()
+    const collections = await dbConfig.collection('collections').get()
     if (collections.docs.length > 0) {
       for (const collection of collections.docs) {
        getCollections.push(collection.data())
@@ -27,8 +29,8 @@ routeConfig.app.get('/collection/read', async (req, res) => {
     res.json(getCollections);
   });
 
-  routeConfig.app.post('/collection/update', async (req, res) => {
-    let updateCollection = routeConfig.db.collection('collections').doc(req.body.uID)
+routeConfig.post('/collection/update', async (req, res) => {
+    let updateCollection = dbConfig.collection('collections').doc(req.body.uID)
     await updateCollection.update({
       email: req.body.email,
       username: req.body.username
@@ -36,7 +38,7 @@ routeConfig.app.get('/collection/read', async (req, res) => {
     res.json({message:'done'});
   });
 
-  routeConfig.app.post('/collection/delete', async (req, res) => {
-    await routeConfig.db.collection('collections').doc(req.body.uID).delete()
+routeConfig.post('/collection/delete', async (req, res) => {
+  await dbConfig.collection('collections').doc(req.body.uID).delete()
     res.json({message:'done'});
   });

@@ -58,5 +58,5 @@ const server = getConfig.app.listen(process.env.PORT, function () {
     const host = 'localhost';
     const port = server.address().port;
 
-    console.log(`App is listening at port  http://${host}:${port}`);
+    console.log(`App is listening at url  http://${host}:${port}`);
 });
