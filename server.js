@@ -1,6 +1,6 @@
 'use strict';
-const dotenv = require('dotenv');
-dotenv.config();
+// const dotenv = require('dotenv');
+// dotenv.config();
 let getConfig = require('./app/config/config');
 
 require('./app/routes/route');
@@ -53,7 +53,7 @@ require('./app/routes/route');
 //   res.json(usex._docs())
 // })
 
-const server = getConfig.app.listen(process.env.PORT || 8080, function () {
+const server = getConfig.app.listen(process.env.SERVER_PORT, function () {
 
     const host = 'localhost';
     const port = server.address().port;
