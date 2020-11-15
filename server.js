@@ -53,11 +53,10 @@ require('./app/routes/route');
 //   res.json(usex._docs())
 // })
 
-const server = getConfig.app.listen(process.env.SERVER_PORT, function () {
+const server = getConfig.app.listen(process.env.PORT, function () {
 
-    // const host = 'localhost';
-    // const port = server.address().port;
-    
-    // console.log(`App is listening at port  http://${host}:${port}`);
-    console.log(`App is listening at port: ${process.env.SERVER_PORT}`);
- });
+    const host = 'localhost';
+    const port = server.address().port;
+
+    console.log(`App is listening at port  http://${host}:${port}`);
+});
