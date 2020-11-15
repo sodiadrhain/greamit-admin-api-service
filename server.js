@@ -53,7 +53,7 @@ require('./app/routes/route');
 //   res.json(usex._docs())
 // })
 
-const server = getConfig.app.listen(process.env.SERVER_PORT, function () {
+const server = getConfig.app.listen(process.env.SERVER_PORT || 8080, function () {
 
     const host = 'localhost';
     const port = server.address().port;
