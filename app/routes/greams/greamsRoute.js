@@ -42,3 +42,5 @@ routeConfig.get('/gream/read', auth, async (req, res) => {
     await dbConfig.collection('greams').doc(req.body.uID).delete()
     res.json({message:'done'});
   });
+
+ module.exports = routeConfig;

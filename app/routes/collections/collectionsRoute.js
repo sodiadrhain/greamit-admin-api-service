@@ -42,3 +42,5 @@ routeConfig.post('/collection/delete', async (req, res) => {
   await dbConfig.collection('collections').doc(req.body.uID).delete()
     res.json({message:'done'});
   });
+
+  module.exports = routeConfig;

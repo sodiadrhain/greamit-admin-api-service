@@ -43,4 +43,4 @@ routeConfig.get('/user/read', auth, async (req, res) => {
     res.json({message:'done'});
   });
 
-module.exports = routeConfig;
+  module.exports = routeConfig;
